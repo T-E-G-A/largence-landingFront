@@ -1,4 +1,5 @@
 import "./globals.css"
+import { Toaster } from 'sonner';
 
 export const metadata = {
   title: "LARGENCE - Legal Docs, Made Simple",
@@ -7,8 +8,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className="scroll-smooth">
+      <body>
+        {children}
+        <Toaster richColors position="top-right" />
+      </body>
     </html>
   )
 }

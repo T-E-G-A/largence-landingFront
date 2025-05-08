@@ -1,84 +1,91 @@
 import Link from "next/link"
 import Image from "next/image"
+import { WaitlistSection } from "@/components/waitlist-section"
+import { ContactFormSection } from "@/components/contact-form-section"
+import { MobileNav } from "@/components/mobile-nav"
 
 export default function Home() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <main className="min-h-screen">
       <div className="relative min-h-screen overflow-hidden bg-white">
         {/* Gradient Circles */}
-        <div className="absolute top-[-400px] left-[-300px] w-[1000px] h-[1000px] rounded-full bg-[#FFFAE2] opacity-95 blur-[100px]"></div>
-        <div className="absolute top-[-200px] right-[-300px] w-[1000px] h-[1000px] rounded-full bg-[#CEFFF9] opacity-95 blur-[100px]"></div>
+        <div className="absolute top-[-250px] md:top-[-500px] left-[-250px] md:left-[-500px] w-[600px] md:w-[1200px] h-[600px] md:h-[1200px] rounded-full bg-[#FFF8E1] opacity-80 blur-[100px] md:blur-[150px] transition-all duration-300"></div>
+        <div className="absolute top-[-200px] md:top-[-400px] right-[-250px] md:right-[-500px] w-[600px] md:w-[1200px] h-[600px] md:h-[1200px] rounded-full bg-[#CEFFF9] opacity-60 blur-[100px] md:blur-[150px] transition-all duration-300"></div>
 
-        <header className="container relative z-10 mx-auto flex items-center justify-between px-4 py-6">
-          <Link href="/" className="flex items-center">
-            <div className="h-12 w-12 relative">
-              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
-                <ellipse cx="20" cy="20" rx="10" ry="2" transform="rotate(45 20 20)" fill="#BFBFBF" />
-                <ellipse cx="20" cy="20" rx="10" ry="2" transform="rotate(90 20 20)" fill="#BFBFBF" />
-                <ellipse cx="20" cy="20" rx="10" ry="2" transform="rotate(135 20 20)" fill="#F40004" />
-              </svg>
-            </div>
-          </Link>
-          <nav className="hidden space-x-6 md:flex">
-            <Link href="#features" className="text-sm font-medium hover:underline">
-              Features
+        <header className="absolute top-0 left-0 right-0 z-50">
+          <div className="relative flex w-full items-center justify-between p-4 max-w-7xl mx-auto">
+            <Link href="/" className="flex items-center group">
+              <div className="relative h-12 w-12 transform transition-transform duration-200 group-hover:scale-105">
+                <Image
+                  src="/images/logo.png"
+                  alt="Largence Logo"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                  priority
+                />
+              </div>
             </Link>
-            <Link href="#learn-more" className="text-sm font-medium hover:underline">
-              Learn More
-            </Link>
-            <Link href="#contact" className="text-sm font-medium hover:underline">
-              Contact
-            </Link>
-          </nav>
+            
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-8 items-center">
+              <Link href="#features" className="text-sm font-medium hover:text-gray-600 transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-red-600 after:transition-all hover:after:w-full">
+                Features
+              </Link>
+              <Link href="#learn-more" className="text-sm font-medium hover:text-gray-600 transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-red-600 after:transition-all hover:after:w-full">
+                Learn More
+              </Link>
+              <Link href="#contact" className="text-sm font-medium hover:text-gray-600 transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-red-600 after:transition-all hover:after:w-full">
+                Contact
+              </Link>
+            </nav>
+
+            {/* Mobile Navigation */}
+            <MobileNav />
+          </div>
         </header>
 
-        <section className="container relative z-10 mx-auto flex flex-col items-center px-4 py-20 text-center md:py-32">
-          <p className="mb-2 text-lg font-medium">LARGENCE</p>
-          <h1 className="mb-4 text-4xl font-bold md:text-6xl lg:text-7xl">
+        <section className="container relative z-10 mx-auto flex flex-col items-center px-4 py-24 text-center md:py-40">
+          <p className="mb-2 text-lg font-medium tracking-wide opacity-90">LARGENCE</p>
+          <h1 className="mb-6 text-4xl font-bold md:text-6xl lg:text-7xl animate-fade-in">
             Legal Docs, Made Simple
             <span className="mt-2 block">
-              Powered by <span className="text-red-600">AI</span>
+              Powered by <span className="text-red-600 relative inline-block after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-red-600 after:transform after:origin-left">AI</span>
             </span>
           </h1>
-          <p className="mb-8 max-w-2xl text-lg md:text-xl">
+          <p className="mb-10 max-w-2xl text-lg md:text-xl text-gray-700 leading-relaxed">
             Generate tailored legal documents in minutes.
-            <br />
+            <br className="hidden md:block" />
             Made for creatives and freelancers.
           </p>
           <div className="flex w-full max-w-md flex-col gap-4 sm:flex-row">
             <Link
               href="#waitlist"
-              className="w-full rounded-full bg-red-600 px-6 py-3 text-center font-medium text-white transition-colors hover:bg-opacity-90"
+              className="group w-full rounded-full bg-red-600 px-6 py-3 text-center font-medium text-white transition-all duration-200 hover:bg-opacity-90 hover:transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
             >
-              Join a waitlist
+              Join waitlist
+              <span className="ml-2 inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
             </Link>
             <Link
               href="#learn-more"
-              className="w-full rounded-full bg-white px-6 py-3 text-center font-medium text-black transition-colors hover:bg-opacity-90"
+              className="group w-full rounded-full bg-white px-6 py-3 text-center font-medium text-black transition-all duration-200 hover:bg-gray-50 hover:transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2"
             >
               Learn more
+              <span className="ml-2 inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
             </Link>
           </div>
         </section>
 
-        <section id="learn-more" className="container relative z-10 mx-auto px-4 py-16 md:py-24">
+        <section id="learn-more" className="container relative z-10 mx-auto px-4 py-16 md:py-24 scroll-mt-20">
           <div className="mx-auto max-w-4xl">
-            <div className="flex items-center mb-12">
-              <div className="h-10 w-10 relative mr-2">
-                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
-                  <ellipse cx="20" cy="20" rx="10" ry="2" transform="rotate(45 20 20)" fill="#BFBFBF" />
-                  <ellipse cx="20" cy="20" rx="10" ry="2" transform="rotate(90 20 20)" fill="#BFBFBF" />
-                  <ellipse cx="20" cy="20" rx="10" ry="2" transform="rotate(135 20 20)" fill="#F40004" />
-                </svg>
-              </div>
-            </div>
-
             <div className="mb-12 text-center">
               <h2 className="mb-4 text-3xl font-bold md:text-4xl">Creativity Deserves Better Paperwork</h2>
-              <p className="text-lg">Largence will make creative work easier to protect.</p>
+              <p className="text-lg text-gray-700">Largence will make creative work easier to protect.</p>
             </div>
 
-            <div className="mb-12 overflow-hidden rounded-2xl">
+            <div className="mb-12 overflow-hidden rounded-2xl transform transition-transform duration-300 hover:scale-[1.02]">
               <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/lgcfig1-vmSKuwq0e91pQJmKBqtQnAKy7Gpx5q.png"
                 alt="Colorful striped pattern"
@@ -88,7 +95,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-8 text-gray-700 leading-relaxed">
               <p>
                 Largence is a tool for generating clean and reliable legal documents, built specifically for creatives
                 and freelancers.
@@ -106,128 +113,104 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="mt-12">
-              <h3 className="mb-4 text-xl font-bold">Largence includes a small set of essential documents:</h3>
+            <div className="mt-16">
+              <h3 id="features" className="mb-6 text-2xl font-bold scroll-mt-20">Essential Documents Included:</h3>
 
-              <ul className="space-y-6">
-                <li>
-                  <strong>Non-Disclosure Agreement (NDA)</strong> - Protects your ideas when you're sharing them with
-                  someone else. It sets the expectation that what's shared stays private.
+              <ul className="space-y-6 text-gray-700">
+                <li className="flex items-start">
+                  <span className="mr-3 text-red-600">•</span>
+                  <div>
+                    <strong className="text-black">Non-Disclosure Agreement (NDA)</strong> - Protects your ideas when you're sharing them with
+                    someone else. It sets the expectation that what's shared stays private.
+                  </div>
                 </li>
 
-                <li>
-                  <strong>Independent Contractor Agreement</strong> - Outlines the terms when someone is hired, but not
-                  as an employee.
+                <li className="flex items-start">
+                  <span className="mr-3 text-red-600">•</span>
+                  <div>
+                    <strong className="text-black">Independent Contractor Agreement</strong> - Outlines the terms when someone is hired, but not
+                    as an employee.
+                  </div>
                 </li>
 
-                <li>
-                  <strong>Consulting Agreement</strong> - For situations where someone is offering advice, strategy, or
-                  expertise. It covers the scope, the fee, and any limitations.
+                <li className="flex items-start">
+                  <span className="mr-3 text-red-600">•</span>
+                  <div>
+                    <strong className="text-black">Consulting Agreement</strong> - For situations where someone is offering advice, strategy, or
+                    expertise. It covers the scope, the fee, and any limitations.
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3 text-red-600">•</span>
+                  <div>
+                    <strong className="text-black">Collaboration Agreement</strong> - When people are working on something together, this helps everyone get on the same page.
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3 text-red-600">•</span>
+                  <div>
+                    <strong className="text-black">Licensing Agreement</strong> - For when you give someone permission to use your IP under specific terms.
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3 text-red-600">•</span>
+                  <div>
+                    <strong className="text-black">Producer Agreement</strong> - Lays out the relationship and terms between a producer and an artist.
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3 text-red-600">•</span>
+                  <div>
+                    <strong className="text-black">Cease and Desist Letter</strong> - A clear and direct way to ask someone to stop using your work or crossing a line before taking legal action.
+                  </div>
                 </li>
               </ul>
             </div>
 
-            <div className="mt-12">
-              <p className="mb-8 text-center">
+            <div className="space-y-8 mt-16 text-gray-700 leading-relaxed">
+              <p>
+                Examples like generic lawyer docs are expensive. Largence is neither; it's specific enough to be trusted and flexible enough to be useful.
+              </p>
+              <p>
+                This isn't about paperwork for the sake of paperwork. It's about protecting what you're responsible for when working with and protecting others. So the work can happen, because creativity deserves better paperwork.
+              </p>
+            </div>
+
+            <div className="mt-16">
+              <p className="mb-8 text-center text-gray-700">
                 You can{" "}
-                <a href="#" className="text-red-600 underline">
+                <Link 
+                  href="mailto:hello@largence.com" 
+                  className="text-red-600 underline hover:text-red-700 transition-colors"
+                >
                   reach out
-                </a>{" "}
+                </Link>{" "}
                 to get more documents added to Largence.
               </p>
 
-              <div className="mx-auto max-w-[450px] rounded-lg bg-white p-8 shadow-lg">
-                <h3 className="mb-6 text-center text-xl font-bold">Contact Us</h3>
-                <form>
-                  <div className="mb-4">
-                    <label htmlFor="contact-name" className="mb-2 block font-medium">
-                      Name
-                    </label>
-                    <input
-                      id="contact-name"
-                      type="text"
-                      className="w-full rounded-md border border-gray-300 p-3"
-                      required
-                    />
-                  </div>
-
-                  <div className="mb-4">
-                    <label htmlFor="contact-email" className="mb-2 block font-medium">
-                      Your email
-                    </label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      className="w-full rounded-md border border-gray-300 p-3"
-                      required
-                    />
-                  </div>
-
-                  <div className="mb-4">
-                    <label htmlFor="message" className="mb-2 block font-medium">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      className="h-32 w-full rounded-md border border-gray-300 p-3"
-                      required
-                    ></textarea>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full rounded-md bg-black py-3 font-medium text-white transition-colors hover:bg-opacity-80"
-                  >
-                    Contact
-                  </button>
-                </form>
+              <div id="contact" className="scroll-mt-20">
+                <ContactFormSection />
               </div>
             </div>
           </div>
         </section>
 
-        <section id="waitlist" className="container relative z-10 mx-auto px-4 py-16 md:py-24">
-          <div className="mx-auto max-w-[450px] rounded-lg bg-white p-8 shadow-lg">
-            <h2 className="mb-6 text-center text-2xl font-bold">Coming June</h2>
-            <form>
-              <div className="mb-4">
-                <label htmlFor="name" className="mb-2 block font-medium">
-                  Name
-                </label>
-                <input id="name" type="text" className="w-full rounded-md border border-gray-300 p-3" required />
-              </div>
-
-              <div className="mb-4">
-                <label htmlFor="email" className="mb-2 block font-medium">
-                  Your email
-                </label>
-                <input id="email" type="email" className="w-full rounded-md border border-gray-300 p-3" required />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full rounded-md bg-red-600 py-3 font-medium text-white transition-colors hover:bg-opacity-90"
-              >
-                Join waitlist
-              </button>
-            </form>
-          </div>
-        </section>
+        <WaitlistSection />
 
         <footer className="container relative z-10 mx-auto flex flex-col items-center justify-center px-4 py-8">
-          <div className="mb-2 flex items-center">
-            <div className="h-12 w-12 relative mr-3">
+          <div className="mb-3 flex items-center">
+            <div className="h-10 w-10 relative mr-2">
               <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
                 <ellipse cx="20" cy="20" rx="10" ry="2" transform="rotate(45 20 20)" fill="#BFBFBF" />
                 <ellipse cx="20" cy="20" rx="10" ry="2" transform="rotate(90 20 20)" fill="#BFBFBF" />
                 <ellipse cx="20" cy="20" rx="10" ry="2" transform="rotate(135 20 20)" fill="#F40004" />
               </svg>
             </div>
-            <p className="text-3xl font-medium">LARGENCE</p>
+            <p className="text-2xl font-medium tracking-wide">LARGENCE</p>
           </div>
-          <p className="text-base">Cambridge, 2025</p>
+          <p className="text-base text-gray-600">Cambridge, {currentYear}</p>
         </footer>
       </div>
     </main>
-  )
+  );
 }
