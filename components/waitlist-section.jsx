@@ -93,7 +93,15 @@ export function WaitlistSection() {
                 onChange={(e) => setFormData({ ...formData, acceptTerms: e.target.checked })}
               />
               <label htmlFor="waitlist-terms" className="ml-2 block text-sm text-gray-700 text-left">
-                I agree to receive emails about Largence and accept the terms and conditions
+                I agree to receive emails about Largence and accept the{" "}
+                <span
+                  onClick={openTermsModal}
+                  className="text-red-600 underline cursor-pointer hover:text-red-700"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openTermsModal(e);}}
+                >
+                  terms and conditions
+                </span>
               </label>
             </div>
 
