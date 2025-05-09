@@ -5,38 +5,58 @@ import { TermsDialog } from "@/components/ui/terms-dialog";
 import { toast } from "sonner";
 
 export function ContactFormSection() {
-  const [contactName, setContactName] = useState("");
-  const [contactEmail, setContactEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+    acceptTerms: false
+  });
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [formError, setFormError] = useState(null);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setFormError(null);
-
-    if (!termsAccepted) {
-      setFormError("You must accept the terms and conditions to send a message.");
-      toast.error("Please accept the terms and conditions.");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.acceptTerms) {
+      toast.error('Please accept the terms and conditions');
       return;
     }
 
-    setIsLoading(true);
-    // Simulate API call
+    setIsSubmitting(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      toast.success("Message sent successfully!");
-      setContactName("");
-      setContactEmail("");
-      setMessage("");
-      setTermsAccepted(false);
+      // Submit form data to your backend/API
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) throw new Error('Failed to submit form');
+
+      // Send auto-reply email
+      await fetch('/api/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          type: 'contact'
+        }),
+      });
+
+      toast.success('Message sent successfully!');
+      setFormData({
+        name: '',
+        email: '',
+        message: '',
+        acceptTerms: false
+      });
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
-      setFormError("Submission failed. Please try again later.");
+      toast.error('Failed to send message. Please try again.');
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -49,19 +69,19 @@ export function ContactFormSection() {
     <>
       <div className="mx-auto max-w-[450px] rounded-lg bg-white p-8 shadow-lg">
         <h3 className="mb-6 text-center text-xl font-bold">Contact Us</h3>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="contact-name" className="mb-2 block font-medium">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Name
             </label>
             <input
-              id="contact-name"
               type="text"
-              value={contactName}
-              onChange={(e) => setContactName(e.target.value)}
-              className="w-full rounded-md border border-gray-300 p-3"
+              id="name"
               required
-              disabled={isLoading}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              disabled={isSubmitting}
             />
           </div>
 
@@ -72,11 +92,11 @@ export function ContactFormSection() {
             <input
               id="contact-email"
               type="email"
-              value={contactEmail}
-              onChange={(e) => setContactEmail(e.target.value)}
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full rounded-md border border-gray-300 p-3"
               required
-              disabled={isLoading}
+              disabled={isSubmitting}
             />
           </div>
 
@@ -86,11 +106,11 @@ export function ContactFormSection() {
             </label>
             <textarea
               id="contact-message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               className="h-32 w-full rounded-md border border-gray-300 p-3"
               required
-              disabled={isLoading}
+              disabled={isSubmitting}
             ></textarea>
           </div>
 
@@ -98,10 +118,10 @@ export function ContactFormSection() {
             <input
               id="terms-checkbox-contact"
               type="checkbox"
-              checked={termsAccepted}
-              onChange={(e) => setTermsAccepted(e.target.checked)}
-              className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500" 
-              disabled={isLoading}
+              checked={formData.acceptTerms}
+              onChange={(e) => setFormData({ ...formData, acceptTerms: e.target.checked })}
+              className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+              disabled={isSubmitting}
             />
             <label htmlFor="terms-checkbox-contact" className="text-sm text-gray-700">
               I agree to the{" "}
@@ -116,16 +136,12 @@ export function ContactFormSection() {
             </label>
           </div>
 
-          {formError && (
-            <p className="mb-4 text-sm text-red-600">{formError}</p>
-          )}
-
           <button
             type="submit"
             className="w-full rounded-md bg-black py-3 font-medium text-white transition-colors hover:bg-opacity-80 disabled:opacity-50"
-            disabled={isLoading || !contactName || !contactEmail || !message || !termsAccepted}
+            disabled={isSubmitting || !formData.name || !formData.email || !formData.message || !formData.acceptTerms}
           >
-            {isLoading ? "Sending..." : "Contact"}
+            {isSubmitting ? "Sending..." : "Contact"}
           </button>
         </form>
       </div>

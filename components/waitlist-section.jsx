@@ -5,37 +5,54 @@ import { TermsDialog } from "@/components/ui/terms-dialog";
 import { toast } from "sonner"; 
 
 export function WaitlistSection() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    acceptTerms: false
+  });
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [formError, setFormError] = useState(null);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setFormError(null);
-
-    if (!termsAccepted) {
-      setFormError("You must accept the terms and conditions to join.");
-      toast.error("Please accept the terms and conditions.");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.acceptTerms) {
+      toast.error('Please accept the terms and conditions');
       return;
     }
 
-    setIsLoading(true);
-    // Simulate API call
+    setIsSubmitting(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      // On success:
-      toast.success("You've successfully joined the waitlist!");
-      setName("");
-      setEmail("");
-      setTermsAccepted(false);
+      // Submit to waitlist API
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) throw new Error('Failed to join waitlist');
+
+      // Send auto-reply email
+      await fetch('/api/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          type: 'waitlist'
+        }),
+      });
+
+      toast.success('Successfully joined the waitlist!');
+      setFormData({
+        email: '',
+        acceptTerms: false
+      });
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
-      setFormError("Submission failed. Please try again later.");
+      toast.error('Failed to join waitlist. Please try again.');
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -46,72 +63,46 @@ export function WaitlistSection() {
 
   return (
     <>
-      <section id="waitlist" className="container relative z-10 mx-auto px-4 py-16 md:py-24">
-        <div className="mx-auto max-w-[450px] rounded-lg bg-white p-8 shadow-lg">
-          <h2 className="mb-6 text-center text-2xl font-bold">Coming June</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label htmlFor="name-waitlist" className="mb-2 block font-medium">
-                Name
+      <section id="waitlist" className="container relative z-10 mx-auto px-4 py-16 md:py-24 scroll-mt-20">
+        <div className="mx-auto max-w-xl text-center">
+          <h2 className="mb-4 text-2xl font-bold md:text-3xl">Join Our Waitlist</h2>
+          <p className="mb-8 text-gray-700">Be the first to know when we launch and get early access to our platform.</p>
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="waitlist-email" className="sr-only">
+                Email address
               </label>
               <input
-                id="name-waitlist"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-md border border-gray-300 p-3"
-                required
-                disabled={isLoading}
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="email-waitlist" className="mb-2 block font-medium">
-                Your email
-              </label>
-              <input
-                id="email-waitlist"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-md border border-gray-300 p-3"
+                id="waitlist-email"
                 required
-                disabled={isLoading}
+                placeholder="Enter your email"
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-4 py-3"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               />
             </div>
 
-            <div className="mb-6 flex items-center space-x-2">
+            <div className="flex items-start justify-center">
               <input
-                id="terms-checkbox-waitlist"
                 type="checkbox"
-                checked={termsAccepted}
-                onChange={(e) => setTermsAccepted(e.target.checked)}
-                className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
-                disabled={isLoading}
+                id="waitlist-terms"
+                className="mt-1 h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                checked={formData.acceptTerms}
+                onChange={(e) => setFormData({ ...formData, acceptTerms: e.target.checked })}
               />
-              <label htmlFor="terms-checkbox-waitlist" className="text-sm text-gray-700">
-                I agree to the{" "}
-                <span
-                  onClick={openTermsModal}
-                  className="text-red-600 underline cursor-pointer hover:text-red-700"
-                  tabIndex={0} 
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openTermsModal(e);}}
-                >
-                  terms and conditions
-                </span>
+              <label htmlFor="waitlist-terms" className="ml-2 block text-sm text-gray-700 text-left">
+                I agree to receive emails about Largence and accept the terms and conditions
               </label>
             </div>
-
-            {formError && (
-              <p className="mb-4 text-sm text-red-600">{formError}</p>
-            )}
 
             <button
               type="submit"
-              className="w-full rounded-md bg-red-600 py-3 font-medium text-white transition-colors hover:bg-opacity-90 disabled:opacity-50"
-              disabled={isLoading || !name || !email || !termsAccepted}
+              disabled={isSubmitting}
+              className="w-full rounded-md bg-red-600 px-6 py-3 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 transition-colors"
             >
-              {isLoading ? "Joining..." : "Join waitlist"}
+              {isSubmitting ? 'Joining...' : 'Join Waitlist'}
             </button>
           </form>
         </div>
