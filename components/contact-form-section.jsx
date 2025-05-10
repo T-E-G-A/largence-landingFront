@@ -4,6 +4,8 @@ import { useState } from "react";
 import { TermsDialog } from "@/components/ui/terms-dialog";
 import { toast } from "sonner";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+
 export function ContactFormSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -24,7 +26,7 @@ export function ContactFormSection() {
     setIsSubmitting(true);
     try {
       // Submit form data to your backend/API
-      const response = await fetch('/api/contact', {
+      const response = await fetch('${API_BASE_URL}/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +37,7 @@ export function ContactFormSection() {
       if (!response.ok) throw new Error('Failed to submit form');
 
       // Send auto-reply email
-      await fetch('/api/send', {
+      await fetch('${API_BASE_URL}/api/send', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
