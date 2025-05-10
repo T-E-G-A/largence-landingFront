@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { TermsDialog } from "@/components/ui/terms-dialog";
-import { toast } from "sonner"; 
+import { toast } from "sonner";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
 export function WaitlistSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,7 +24,7 @@ export function WaitlistSection() {
     setIsSubmitting(true);
     try {
       // Submit to waitlist API
-      const response = await fetch('/api/waitlist', {
+      const response = await fetch('${API_BASE_URL}/api/waitlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,7 +35,7 @@ export function WaitlistSection() {
       if (!response.ok) throw new Error('Failed to join waitlist');
 
       // Send auto-reply email
-      await fetch('/api/send', {
+      await fetch('${API_BASE_URL}/api/send', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
