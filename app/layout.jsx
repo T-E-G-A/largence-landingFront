@@ -1,5 +1,8 @@
 import "./globals.css"
 import { Toaster } from 'sonner';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: "LARGENCE - Legal Docs, Made Simple",
@@ -11,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className={`${inter.className} scroll-smooth`}>
       {/* The <head> tag is automatically managed by Next.js through the metadata object or can be customized using next/head if more control is needed. */}
       {/* For a simple favicon, adding it to the metadata object is the recommended approach. */}
       <body>
