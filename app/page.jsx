@@ -50,9 +50,9 @@ export default function Home() {
         <section className="container relative z-10 mx-auto flex flex-col items-center px-4 py-24 text-center md:py-40">
           <p className="mb-2 text-lg font-medium tracking-wide opacity-90">LARGENCE</p>
           <h1 className="mb-6 text-4xl font-bold md:text-6xl lg:text-7xl animate-fade-in">
-            Legal Docs, Made Simple
+            Custom Legal Docs
             <span className="mt-2 block">
-              Powered by <span className="text-red-600 relative inline-block after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-red-600 after:transform after:origin-left">AI</span>
+              In <span className="text-red-600 relative inline-block">Minutes</span>
             </span>
           </h1>
           <p className="mb-10 max-w-2xl text-lg md:text-xl text-gray-700 leading-relaxed">
@@ -81,11 +81,19 @@ export default function Home() {
         <section id="learn-more" className="container relative z-10 mx-auto px-4 py-16 md:py-24 scroll-mt-20">
           <div className="mx-auto max-w-4xl">
             <div className="mb-12 text-center">
-              <h2 className="mb-4 text-3xl font-bold md:text-4xl">Creativity Deserves Better Paperwork</h2>
-              <p className="text-lg text-gray-700">Largence will make creative work easier to protect.</p>
+              <h2 className="mb-4 text-4xl md:text-5xl font-bold" style={{ fontFamily: "var(--font-neue-haas)" }}>
+                Creativity Deserves
+                <br />
+                Better Paperwork
+              </h2>
+              <p className="text-lg text-gray-900" style={{ fontFamily: "var(--font-neue-haas)" }}>
+                Largence will make creative work
+                <br />
+                easier to protect.
+              </p>
             </div>
 
-            <div className="mb-12 overflow-hidden rounded-2xl transform transition-transform duration-300 hover:scale-[1.02]">
+            <div className="mb-12 overflow-hidden rounded-[2rem] transform transition-transform duration-300 hover:scale-[1.02]">
               <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/lgcfig1-vmSKuwq0e91pQJmKBqtQnAKy7Gpx5q.png"
                 alt="Colorful striped pattern"
@@ -197,18 +205,22 @@ export default function Home() {
 
         <WaitlistSection />
 
-        <footer className="container relative z-10 mx-auto flex flex-col items-center justify-center px-4 py-8">
-          <div className="mb-3 flex items-center">
-            <div className="h-10 w-10 relative mr-2">
-              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
-                <ellipse cx="20" cy="20" rx="10" ry="2" transform="rotate(45 20 20)" fill="#BFBFBF" />
-                <ellipse cx="20" cy="20" rx="10" ry="2" transform="rotate(90 20 20)" fill="#BFBFBF" />
-                <ellipse cx="20" cy="20" rx="10" ry="2" transform="rotate(135 20 20)" fill="#F40004" />
-              </svg>
+        <footer className="container relative z-10 mx-auto flex flex-col items-center justify-center px-4 py-32">
+          <div className="flex flex-col items-center">
+            <div className="flex items-center justify-center mb-4">
+              <div className="h-[6.5rem] w-[6.5rem] relative -mt-1 -mr-6">
+                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
+                  <ellipse cx="20" cy="20" rx="12" ry="2" transform="rotate(45 20 20)" fill="#BFBFBF" />
+                  <ellipse cx="20" cy="20" rx="12" ry="2" transform="rotate(90 20 20)" fill="#BFBFBF" />
+                  <ellipse cx="20" cy="20" rx="12" ry="2" transform="rotate(135 20 20)" fill="#F40004" />
+                </svg>
+              </div>
+              <p className="text-[3rem] font-medium tracking-normal" style={{ fontFamily: "var(--font-neue-haas)" }}>LARGENCE</p>
             </div>
-            <p className="text-2xl font-medium tracking-wide">LARGENCE</p>
+            <div className="flex justify-center w-full">
+              <p className="text-lg text-gray-600 tracking-wide" style={{ fontFamily: "var(--font-neue-haas)" }}>Cambridge, {currentYear}</p>
+            </div>
           </div>
-          <p className="text-base text-gray-600">Cambridge, {currentYear}</p>
         </footer>
       </div>
     </main>
