@@ -22,38 +22,41 @@ export function ContactFormSection() {
 
   return (
     <>
-      <div className="mx-auto max-w-[450px] rounded-lg bg-white p-8 shadow-lg text-center">
-        <h3 className="mb-6 text-xl font-bold">Contact Us</h3>
-        
-        <div className="mb-6 flex items-center space-x-2 justify-center">
-          <input
-            id="terms-checkbox-contact"
-            type="checkbox"
-            checked={acceptTerms}
-            onChange={(e) => setAcceptTerms(e.target.checked)}
-            className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
-          />
-          <label htmlFor="terms-checkbox-contact" className="text-sm text-gray-700">
-            I agree to the{" "}
-            <span
-              onClick={openTermsModal}
-              className="text-red-600 underline cursor-pointer hover:text-red-700"
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openTermsModal(e);}}
-            >
-              terms and conditions
-            </span>
-          </label>
-        </div>
+      <section id="contact" className="container relative z-10 mx-auto px-4 py-16 md:py-24 scroll-mt-20">
+        <div className="mx-auto max-w-xl text-center">
+          <h2 className="mb-4 text-2xl font-bold md:text-3xl">Contact Us</h2>
+          <p className="mb-8 text-gray-700">Get in touch with us for any inquiries or to learn more about our services.</p>
+          
+          <div className="mb-6 flex items-start justify-center">
+            <input
+              id="terms-checkbox-contact"
+              type="checkbox"
+              checked={acceptTerms}
+              onChange={(e) => setAcceptTerms(e.target.checked)}
+              className="mt-1 h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+            />
+            <label htmlFor="terms-checkbox-contact" className="ml-2 block text-sm text-gray-700 text-left">
+              I agree to the{" "}
+              <span
+                onClick={openTermsModal}
+                className="text-red-600 underline cursor-pointer hover:text-red-700"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openTermsModal(e);}}
+              >
+                terms and conditions
+              </span>
+            </label>
+          </div>
 
-        <a
-          href="mailto:hello@largence.com"
-          onClick={handleEmailClick}
-          className="inline-block w-full rounded-md bg-black py-3 font-medium text-white transition-colors hover:bg-opacity-80"
-        >
-          Send us an email
-        </a>
-      </div>
+          <a
+            href="mailto:hello@largence.com"
+            onClick={handleEmailClick}
+            className="inline-block w-full rounded-2xl bg-black px-6 py-3 font-medium text-white transition-colors hover:bg-opacity-80 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+          >
+            Send us an email
+          </a>
+        </div>
+      </section>
 
       <TermsDialog open={isTermsModalOpen} onOpenChange={setIsTermsModalOpen}>
         <h3 className="text-lg font-semibold mb-2">Our Terms of Service</h3>

@@ -55,25 +55,23 @@ export default function Home() {
               In <span className="text-red-600 relative inline-block">Minutes</span>
             </span>
           </h1>
-          <p className="mb-10 max-w-2xl text-lg md:text-xl text-gray-700 leading-relaxed">
+          <p className="mb-12 max-w-2xl text-lg md:text-xl text-gray-700 leading-relaxed">
             Generate tailored legal documents in minutes.
             <br className="hidden md:block" />
             Made for creatives and freelancers.
           </p>
-          <div className="flex w-full max-w-md flex-col gap-4 sm:flex-row">
+          <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Link
               href="#waitlist"
-              className="group w-full rounded-full bg-red-600 px-6 py-3 text-center font-medium text-white transition-all duration-200 hover:bg-opacity-90 hover:transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+              className="rounded-full bg-[#FF0000] px-12 py-3 text-[14px] font-bold text-white transition-all duration-200 hover:bg-opacity-90 border-[0.03px] border-black/30 w-[200px] inline-flex items-center justify-center whitespace-nowrap"
             >
-              Join waitlist
-              <span className="ml-2 inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
+              Join&nbsp;Waitlist
             </Link>
             <Link
               href="#learn-more"
-              className="group w-full rounded-full bg-white px-6 py-3 text-center font-medium text-black transition-all duration-200 hover:bg-gray-50 hover:transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2"
+              className="rounded-full bg-white px-12 py-3 text-[14px] font-bold text-black transition-all duration-200 hover:bg-gray-50 border-[0.03px] border-black/30 w-[200px] inline-flex items-center justify-center"
             >
               Learn more
-              <span className="ml-2 inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
             </Link>
           </div>
         </section>

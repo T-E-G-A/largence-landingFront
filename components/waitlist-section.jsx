@@ -53,7 +53,7 @@ export function WaitlistSection() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleTypeformClick}
-            className="inline-block w-full rounded-md bg-red-600 px-6 py-3 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+            className="inline-block w-full rounded-2xl bg-red-600 px-6 py-3 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
           >
             Join Waitlist
           </a>
